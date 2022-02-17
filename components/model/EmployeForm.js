@@ -1,16 +1,46 @@
 import { useState } from "react";
+import axios from "axios";
 
-export default function EmployeForm({ jwt, setModel }) {
-  const [employe, setEmploye] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    salary: "",
-    age: "",
-  });
-
+export default function EmployeForm({
+  jwt,
+  setModel,
+  employe,
+  setEmploye,
+  setEmpData,
+  edit,
+}) {
   const handleChange = (e) => {
     setEmploye({ ...employe, [e.target.name]: e.target.value });
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    axios({
+      method: `${edit ? "patch" : "post"}`,
+      headers: { authorization: `bearer ${jwt}` },
+      url: `${process.env.NEXT_PUBLIC_SERVER}/api/employe/`,
+      data: employe,
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setEmpData(res.data.data);
+          alert(res.data.message);
+          setEmploye({
+            firstName: "",
+            lastName: "",
+            email: "",
+            salary: "",
+            age: "",
+          });
+
+          setModel("none");
+        }
+      })
+      .catch((err) => {
+        alert(err.response.data?.message);
+        console.log(err.response.data?.message);
+        setModel("none");
+      });
   };
 
   return (
@@ -109,7 +139,7 @@ export default function EmployeForm({ jwt, setModel }) {
           </div>
           <div className="flex flex-row">
             <button
-              // onClick={handleClick}
+              onClick={handleClick}
               className="mt-4 mx-3 w-1/5 bg-gradient-to-tr from-blue-600 to-indigo-600 text-indigo-100 py-2 rounded-md text-lg tracking-wide"
             >
               save
