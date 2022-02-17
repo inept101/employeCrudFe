@@ -16,11 +16,13 @@ const userLogin = (state, action) => {
 const Logout = (state) => {
   if (typeof window !== "undefined") {
     window.localStorage.removeItem("jwt");
+    window.localStorage.removeItem("userName");
   }
   return {
     ...state,
     jwt: undefined,
     isLoggedIn: false,
+    userName: undefined,
   };
 };
 

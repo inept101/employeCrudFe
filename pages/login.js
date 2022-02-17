@@ -3,7 +3,6 @@ import axios from "axios";
 
 import { UserContext } from "../context/users/contex";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 function Login() {
   const [appState, dispatch] = useContext(UserContext);

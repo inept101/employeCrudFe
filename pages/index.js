@@ -80,6 +80,14 @@ export default function Home() {
 
       <div className="h-screen  bg-gradient-to-br from-blue-600 to-indigo-600 flex flex-col justify-center items-center w-full">
         <p className="font-bold text-2xl">Welcome {appState.userName}</p>
+        <button
+          onClick={() => {
+            dispatch({ type: "LOGOUT" });
+          }}
+        >
+          {" "}
+          Logout
+        </button>
         <div className="bg-white rounded-xl max-w-screen-lg shadow-md p-4">
           <div className="w-full flex justify-between">
             <p className="font-semibold text-xl ml-8">Emplyee Table</p>
